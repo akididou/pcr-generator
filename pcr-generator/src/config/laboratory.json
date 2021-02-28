@@ -1,0 +1,62 @@
+[
+    {
+        "id": 0,
+        "name": "LBM ORIADE NOVIALE FERNEY VOLTAIRE",
+        "address": {
+            "street": "13 Chemin du levant",
+            "city": "Ferney-Voltaire",
+            "zip": "01210",
+            "department": {
+                "name": "Ain",
+                "code": "01"
+            }
+        },
+        "phone": "04 50 40 57 51",
+        "email": "labo.ferneyvoltaire@oriade.fr"
+    },
+    {
+        "id": 1,
+        "name": "LBM ORIADE NOVIALE ANNEMASSE",
+        "address": {
+            "street": "15 rue du Môle",
+            "city": "Annemasse",
+            "zip": "74100",
+            "department": {
+                "name": "Haute-Savoie",
+                "code": "74"
+            }
+        },
+        "phone": "04 50 87 61 87",
+        "email": "labo.annemasse@oriade.fr"
+    },
+    {
+        "id": 2,
+        "name": "Centre de consultation du Genevois",
+        "address": {
+            "street": "17 avenue Pierre Mendes France",
+            "city": "Annemasse",
+            "zip": "74100",
+            "department": {
+                "name": "Haute-Savoie",
+                "code": "74"
+            }
+        },
+        "phone": "04 50 83 49 10",
+        "email": "clinique.annemasse@consultation-genevois.fr"
+    },
+    {
+        "id": 3,
+        "name": "Cabinet infirmier Morgan OLDONAY",
+        "address": {
+            "street": "35 rue de Geneve",
+            "city": "Ambilly",
+            "zip": "74100",
+            "department": {
+                "name": "Haute-Savoie",
+                "code": "74"
+            }
+        },
+        "phone": "04 50 79 16 99",
+        "email": "rdv74corona@morgan-oldonay.fr"
+    }
+]
