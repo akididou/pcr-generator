@@ -15,3 +15,13 @@ interface ILaboratory {
     phone: string;
     email: string;
 }
+
+interface IUser {
+    gender: string;
+    lastname: string;
+    firstname: string;
+    street: string;
+    city: string;
+    zip: string;
+    born: string;
+}

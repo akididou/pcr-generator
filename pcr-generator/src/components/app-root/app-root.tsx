@@ -10,16 +10,8 @@ import { Utils } from './../../utils/utils';
   shadow: false,
 })
 export class AppRoot {
-  @State() selectedLaboartory: ILaboratory = laboratories[0];
-  @State() user = {
-    gender: null,
-    lastname: null,
-    firstname: null,
-    street: null,
-    city: null,
-    zip: null,
-    born: null
-  }
+  @State() selectedLaboartory: ILaboratory;
+  @State() user: IUser;
   @State() reload = false;
   @State() checkAvailable = false;
 
@@ -30,13 +22,17 @@ export class AppRoot {
   doctor = doctors[this.typeDoctor][this.utils.randomNumber(0, doctors[this.typeDoctor].length - 1)];
 
   constructor() {
+    const user = this.utils.getCookie('pcr-test-user');
+    this.user = JSON.parse(user);
+
+    const laboratory = this.utils.getCookie('pcr-test-laboratory');
+    this.selectedLaboartory = JSON.parse(laboratory);
+
     this.getCurrentDate();
   }
 
   generatePdf() {
     const pdfDOm = document.getElementById('pdf');
-    console.log('document', document)
-    console.log('pdfDOm', pdfDOm)
     const opt = {
       margin: 0,
       filename: `test-pcr-${this.user.lastname}.pdf`,
@@ -88,6 +84,11 @@ export class AppRoot {
     this.folderNumber = `FO${year}${month}${day}${this.utils.randomNumber(0, 30)}`
   }
 
+  saveData() {
+    this.utils.setCookie('pcr-test-user', JSON.stringify(this.user), 365)
+    this.utils.setCookie('pcr-test-laboratory', JSON.stringify(this.selectedLaboartory), 365)
+  }
+
   render() {
     return (
       <Host>
@@ -101,7 +102,7 @@ export class AppRoot {
                   laboratories
                     .sort((a, b) => parseInt(a?.address.department.code) - parseInt(b?.address.department.code))
                     .map(laboratory => {
-                      return <option value={laboratory.id}>
+                      return <option value={laboratory.id} selected={laboratory.id === this.selectedLaboartory.id}>
                         {`${laboratory.address.city}(${laboratory.address.department.code}) - ${laboratory.name}`}
                       </option>
                     })
@@ -114,11 +115,11 @@ export class AppRoot {
                 <div class="select">
                   <div>{this.utils.translate('Gender')}</div>
                   <select class="select-laboratory" onChange={(event) => this.inputChange(event, 'gender')}>
-                    <option value="" selected disabled hidden>{this.utils?.translate('Gender')}</option>
+                    <option selected disabled hidden>{this.utils?.translate('Gender')}</option>
                     {
                       ['Male', 'Female']
                         .map(gender => {
-                          return <option value={gender}>
+                          return <option value={gender} selected={gender === this.user.gender}>
                             {gender === 'Male' ? this.utils.translate('Male') : this.utils.translate('Female')}
                           </option>
                         })
@@ -152,7 +153,10 @@ export class AppRoot {
               </div>
             </div>
           </div>
-          <button disabled={this.checkAvailable} onClick={() => this.generatePdf()}>{this.utils.translate('Generate')}</button>
+          <div class="actions">
+            <button class="save" disabled={this.checkAvailable} onClick={() => this.saveData()}>{this.utils.translate('Save my datas')}</button>
+            <button class="generate" disabled={this.checkAvailable} onClick={() => this.generatePdf()}>{this.utils.translate('Generate')}</button>
+          </div>
         </header>
         <main id="pdf">
           <div class="header">

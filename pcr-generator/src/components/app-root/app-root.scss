@@ -8,7 +8,7 @@ header {
   padding: 15px;
 
   button {
-    height: 60px;
+    height: 40px;
     color: white;
     background: #3bb449;
     border-radius: 5px;
@@ -18,9 +18,6 @@ header {
     font-weight: 500;
     text-transform: uppercase;
     cursor: pointer;
-    position: absolute;
-    right: 10px;
-    top: 20px;
 
     &:focus {
       outline: none;
@@ -36,6 +33,29 @@ header {
       border: none;
       color: black;
       cursor: not-allowed;
+    }
+  }
+
+  .actions {
+    position: absolute;
+    right: 10px;
+    top: 0;
+
+    .generate {
+      position: relative;
+      top: 20px;
+    }
+
+    .save {
+      position: relative;
+      margin-right: 10px;
+      top: 20px;
+      background-color: #0098FF;
+
+      &:hover {
+        transition: all 0.3s;
+        background-color: #007EE2;
+      }
     }
   }
 
