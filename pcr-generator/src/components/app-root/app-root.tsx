@@ -12,15 +12,16 @@ import { Utils } from './../../utils/utils';
 export class AppRoot {
   @State() selectedLaboartory: ILaboratory = laboratories[0];
   @State() user = {
-    gender: 'Male',
-    lastname: 'Poizat',
-    firstname: 'Jean-Patrick',
-    street: '136 impasse des capucines',
-    city: 'Prevessin Moens',
-    zip: '01280',
-    born: '10/06/1990'
+    gender: null,
+    lastname: null,
+    firstname: null,
+    street: null,
+    city: null,
+    zip: null,
+    born: null
   }
   @State() reload = false;
+  @State() checkAvailable = false;
 
   utils = new Utils();
   typeDoctor = this.utils.randomNumber(0, 1) ? 'male' : 'female';
@@ -58,7 +59,19 @@ export class AppRoot {
 
   inputChange(value, type: string) {
     this.user[type] = value.target.value;
+    this.disabledButton();
     this.reload = !this.reload;
+  }
+
+  disabledButton() {
+    let verif = true;
+    Object.keys(this.user).forEach(item => {
+      if (!this.user[item]) {
+        verif = false
+      }
+    })
+
+    this.checkAvailable = !verif;
   }
 
   selectLaboratory(value) {
@@ -139,7 +152,7 @@ export class AppRoot {
               </div>
             </div>
           </div>
-          <button onClick={() => this.generatePdf()}>{this.utils.translate('Generate')}</button>
+          <button disabled={this.checkAvailable} onClick={() => this.generatePdf()}>{this.utils.translate('Generate')}</button>
         </header>
         <main id="pdf">
           <div class="header">
