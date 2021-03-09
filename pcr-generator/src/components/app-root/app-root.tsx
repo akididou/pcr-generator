@@ -17,27 +17,33 @@ export class AppRoot {
 
   utils = new Utils();
   typeDoctor = this.utils.randomNumber(0, 1) ? 'male' : 'female';
-  currentDate: string;
-  folderNumber: string;
+  folderNumber = this.utils.getCookie('pcr-test-date');
   doctor = doctors[this.typeDoctor][this.utils.randomNumber(0, doctors[this.typeDoctor].length - 1)];
+  testDate: string;
+  inputDate: string;
 
   constructor() {
     const user = this.utils.getCookie('pcr-test-user');
-    this.user = JSON.parse(user);
+    this.user = user.length > 0 ? JSON.parse(user) : {};
 
     const laboratory = this.utils.getCookie('pcr-test-laboratory');
-    this.selectedLaboartory = JSON.parse(laboratory);
+    this.selectedLaboartory = laboratory.length > 0 ? JSON.parse(laboratory) : laboratories[0];
 
-    this.getCurrentDate();
+    const folderNumber = this.utils.getCookie('pcr-test-date');
+    if (folderNumber.length > 0) {
+      this.initDate();
+    } else {
+      this.getCurrentDate();
+    }
   }
 
   generatePdf() {
     const pdfDOm = document.getElementById('pdf');
     const opt = {
       margin: 0,
-      filename: `test-pcr-${this.user.lastname}.pdf`,
+      filename: `test-pcr-${this.user?.lastname}.pdf`,
       image: { type: 'jpeg', quality: 1 },
-      html2canvas: { scale: 3 },
+      html2canvas: { scale: 3},
       jsPDF: {
         orientation: 'p',
         unit: 'mm',
@@ -80,13 +86,37 @@ export class AppRoot {
     const month = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     const year = today.getFullYear();
 
-    this.currentDate = day + '/' + month + '/' + year;
+    this.inputDate = year + '-' + month + '-' + day;
+    this.testDate = day + '/' + month + '/' + year;
     this.folderNumber = `FO${year}${month}${day}${this.utils.randomNumber(0, 30)}`
+  }
+
+  formatDate(value: InputEvent) {
+    const date = typeof value === 'string' ? value : value.target['value'];
+    const day = date.split('-')[2]
+    const month = date.split('-')[1]
+    const year = date.split('-')[0]
+
+    this.inputDate = year + '-' + month + '-' + day;
+    this.testDate = day + '/' + month + '/' + year;
+    this.folderNumber = `FO${year}${month}${day}${this.utils.randomNumber(0, 30)}`
+  }
+
+  initDate() {
+    let folderNumber: any;
+    folderNumber = this.utils.getCookie('pcr-test-date');
+    folderNumber = JSON.parse(folderNumber);
+    folderNumber = folderNumber.date;
+
+    folderNumber = folderNumber.replace(/\//g, "-")
+    // folderNumber = folderNumber.replace('/', '-');
+    this.formatDate(folderNumber);
   }
 
   saveData() {
     this.utils.setCookie('pcr-test-user', JSON.stringify(this.user), 365)
     this.utils.setCookie('pcr-test-laboratory', JSON.stringify(this.selectedLaboartory), 365)
+    this.utils.setCookie('pcr-test-date', JSON.stringify({ date: this.testDate, folderNumber: this.folderNumber }), 365)
   }
 
   render() {
@@ -94,20 +124,26 @@ export class AppRoot {
       <Host>
         <header>
           <div>
-            <div class="select">
-              <div class="bold">{this.utils.translate('Select a laboratory')}</div>
-              <select class="select-laboratory" onChange={(event) => this.selectLaboratory(event)} >
-                <option value="" selected disabled hidden>{this.utils.translate('Selectionner')}</option>
-                {
-                  laboratories
-                    .sort((a, b) => parseInt(a?.address.department.code) - parseInt(b?.address.department.code))
-                    .map(laboratory => {
-                      return <option value={laboratory.id} selected={laboratory.id === this.selectedLaboartory.id}>
-                        {`${laboratory.address.city}(${laboratory.address.department.code}) - ${laboratory.name}`}
-                      </option>
-                    })
-                }
-              </select>
+            <div class="flex">
+              <div class="margin-right-20">
+                <div class="bold">{this.utils.translate('Select a laboratory')}</div>
+                <select class="select-laboratory" onChange={(event) => this.selectLaboratory(event)} >
+                  <option value="" selected disabled hidden>{this.utils.translate('Selectionner')}</option>
+                  {
+                    laboratories
+                      .sort((a, b) => parseInt(a?.address.department.code) - parseInt(b?.address.department.code))
+                      .map(laboratory => {
+                        return <option value={laboratory?.id} selected={laboratory?.id === this.selectedLaboartory?.id}>
+                          {`${laboratory.address.city}(${laboratory.address.department.code}) - ${laboratory.name}`}
+                        </option>
+                      })
+                  }
+                </select>
+              </div>
+              <div>
+                <div class="bold">{this.utils.translate('Select test date')}</div>
+                <input type="date" value={this.inputDate} onInput={(event: InputEvent) => this.formatDate(event)} />
+              </div>
             </div>
             <div class="user-info">
               <p class="bold">{this.utils.translate("Enter your personal informations")}</p>
@@ -119,7 +155,7 @@ export class AppRoot {
                     {
                       ['Male', 'Female']
                         .map(gender => {
-                          return <option value={gender} selected={gender === this.user.gender}>
+                          return <option value={gender} selected={gender === this.user?.gender}>
                             {gender === 'Male' ? this.utils.translate('Male') : this.utils.translate('Female')}
                           </option>
                         })
@@ -128,27 +164,27 @@ export class AppRoot {
                 </div>
                 <div class="input user-info__firstname">
                   <div>{this.utils.translate('First name')}</div>
-                  <input type="text" value={this.user.firstname} onInput={(event) => this.inputChange(event, 'firstname')} />
+                  <input type="text" value={this.user?.firstname} onInput={(event) => this.inputChange(event, 'firstname')} />
                 </div>
                 <div class="input user-info__lastname">
                   <div>{this.utils.translate('Last name')}</div>
-                  <input type="text" value={this.user.lastname} onInput={(event) => this.inputChange(event, 'lastname')} />
+                  <input type="text" value={this.user?.lastname} onInput={(event) => this.inputChange(event, 'lastname')} />
                 </div>
                 <div class="input user-info__street">
                   <div>{this.utils.translate('Address')}</div>
-                  <input type="text" value={this.user.street} onInput={(event) => this.inputChange(event, 'street')} />
+                  <input type="text" value={this.user?.street} onInput={(event) => this.inputChange(event, 'street')} />
                 </div>
                 <div class="input user-info__city">
                   <div>{this.utils.translate('City')}</div>
-                  <input type="text" value={this.user.city} onInput={(event) => this.inputChange(event, 'city')} />
+                  <input type="text" value={this.user?.city} onInput={(event) => this.inputChange(event, 'city')} />
                 </div>
                 <div class="input user-info__zip">
                   <div>{this.utils.translate('Zip')}</div>
-                  <input type="text" value={this.user.zip} onInput={(event) => this.inputChange(event, 'zip')} />
+                  <input type="text" value={this.user?.zip} onInput={(event) => this.inputChange(event, 'zip')} />
                 </div>
                 <div class="input user-info__born">
                   <div>{this.utils.translate('Born')}</div>
-                  <input type="text" value={this.user.born} onInput={(event) => this.inputChange(event, 'born')} />
+                  <input type="text" value={this.user?.born} onInput={(event) => this.inputChange(event, 'born')} />
                 </div>
               </div>
             </div>
@@ -185,27 +221,27 @@ export class AppRoot {
                 <i>Rendez vous COVID sans prescription</i>
               </div>
               <div class="left__exam">
-                <div class="line-1">Examen de <strong>{this.user.gender === 'Male' ? 'M.' : 'Mme.'} {this.user.firstname} {this.user.lastname}</strong></div>
-                <div class="line-2">né(e) le {this.user.born}</div>
+                <div class="line-1">Examen de <strong>{this.user?.gender === 'Male' ? 'M.' : 'Mme.'} {this.user?.firstname} {this.user?.lastname}</strong></div>
+                <div class="line-2">né(e) le {this.user?.born}</div>
               </div>
               <div class="left__folder">
-                Dossier <strong>{this.folderNumber}</strong> du <strong>{this.currentDate}</strong>
+                Dossier <strong>{this.folderNumber}</strong> du <strong>{this.testDate}</strong>
               </div>
               <div class="left__description">
-                <div>Date et heure du prélévement: {this.currentDate} à 09:00</div>
+                <div>Date et heure du prélévement: {this.testDate} à 09:00</div>
                 <div>(hors informations complémentaires figurant dans le compte−rendu)</div>
               </div>
             </div>
             <div class="right">
               <div class="right-address">
                 <div class="right-address__name">
-                  {this.user.gender === 'Male' ? 'M.' : 'Mme.'} {this.user.firstname} {this.user.lastname}
+                  {this.user?.gender === 'Male' ? 'M.' : 'Mme.'} {this.user?.firstname} {this.user?.lastname}
                 </div>
                 <div class="right-address__street">
-                  {this.user.street}
+                  {this.user?.street}
                 </div>
                 <div class="right-address__street--2">
-                  {this.user.zip} {this.user.city}
+                  {this.user?.zip} {this.user?.city}
                 </div>
 
                 <div class="right-address__pub">
