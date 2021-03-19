@@ -58,5 +58,65 @@
         },
         "phone": "04 50 79 16 99",
         "email": "rdv74corona@morgan-oldonay.fr"
+    },
+    {
+        "id": 4,
+        "name": "LABM CTRE MED ENTREPRISES",
+        "address": {
+            "street": "10 rue du Colonel Driant",
+            "city": "Paris",
+            "zip": "75001",
+            "department": {
+                "name": "Île-de-France",
+                "code": "75"
+            }
+        },
+        "phone": "01 53 45 86 60",
+        "email": "info@cmete.com"
+    },
+    {
+        "id": 5,
+        "name": "LBM BIOGROUP BIOLAM LCD SITE VOLTAIRE",
+        "address": {
+            "street": "161 Boulevard Voltaire",
+            "city": "Paris",
+            "zip": "75011",
+            "department": {
+                "name": "Île-de-France",
+                "code": "75"
+            }
+        },
+        "phone": "01 76 21 57 76",
+        "email": "infocovid.idf@biogroup.fr"
+    },
+    {
+        "id": 6,
+        "name": "BIOMED 34",
+        "address": {
+            "street": "71 Avenue du Maréchal Juin",
+            "city": "Frontignan",
+            "zip": "34110",
+            "department": {
+                "name": "Herault",
+                "code": "34"
+            }
+        },
+        "phone": "04 67 48 47 11",
+        "email": "contact@biomed34.fr"
+    },
+    {
+        "id": 7,
+        "name": "LABOSUD",
+        "address": {
+            "street": "43 Rue du Faubourg Saint Jaumes",
+            "city": "Montpellier",
+            "zip": "34000",
+            "department": {
+                "name": "Herault",
+                "code": "34"
+            }
+        },
+        "phone": "04 67 61 20 94",
+        "email": "contact@labosud.fr"
     }
 ]
