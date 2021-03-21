@@ -1,11 +1,16 @@
 header {
+  display: flex;
+  flex-direction: column;
   background: #5851ff;
   color: white;
-  display: flex;
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
   padding: 15px;
+
+  .info-container {
+    width: 100%;
+  }
 
   button {
     height: 40px;
@@ -36,25 +41,45 @@ header {
     }
   }
 
+  .first-block {
+    display: flex;
+
+    .line-1 {
+      margin-right: 20px;
+
+      select {
+        width: 100%;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      flex-direction: column;
+
+      .line-1 {
+        margin-bottom: 20px;
+      }
+    }
+  }
+
   .actions {
-    position: absolute;
-    right: 10px;
-    top: 0;
+    margin-top: 20px;
 
     .generate {
       position: relative;
-      top: 20px;
+      
+      @media screen and (max-width: 768px) {
+        margin-top: 20px;
+      }
     }
 
     .save {
       position: relative;
       margin-right: 10px;
-      top: 20px;
-      background-color: #0098FF;
+      background-color: #0098ff;
 
       &:hover {
         transition: all 0.3s;
-        background-color: #007EE2;
+        background-color: #007ee2;
       }
     }
   }
@@ -77,6 +102,19 @@ header {
 
       &:last-of-type {
         margin-right: 0;
+      }
+    }
+
+    .info-list {
+      flex-direction: row;
+
+      @media screen and (max-width: 768px) {
+        flex-direction: column;
+
+        .block {
+          display: flex;
+          flex-direction: row;
+        }
       }
     }
   }
