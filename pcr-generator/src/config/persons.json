@@ -1,0 +1,79 @@
+{
+    "mamie": {
+        "id": "mamie",
+        "gender": "Female",
+        "firstname": "Rosalie",
+        "lastname": "Puliat",
+        "city": "Sommière",
+        "street": "Rampe des Écureuils",
+        "zip": "30250",
+        "born": "23/04/1933",
+        "laboratoryId": 8
+    },
+    "brigitte": {
+        "id": "briggite",
+        "gender": "Female",
+        "firstname": "Brigitte",
+        "lastname": "Puliat",
+        "street": "12 rue de Berlin",
+        "city": "Sète",
+        "zip": "34200",
+        "born": "21/02/1956",
+        "laboratoryId": 6
+    },
+    "angelique": {
+        "id": "angelique",
+        "gender": "Female",
+        "firstname": "Angélique",
+        "street": "12 rue de Berlin",
+        "lastname": "Contegat",
+        "city": "Sète",
+        "zip": "34200",
+        "born": "14/12/1987",
+        "laboratoryId": 6
+    },
+    "pa": {
+        "id": "pa",
+        "gender": "Male",
+        "firstname": "Pierre-antoine",
+        "lastname": "Poizat",
+        "street": "12 rue de Berlin",
+        "city": "Sète",
+        "zip": "34200",
+        "born": "06/10/1985",
+        "laboratoryId": 6
+    },
+    "denis": {
+        "id": "denis",
+        "gender": "Male",
+        "firstname": "Denis",
+        "lastname": "Poizat",
+        "street": "12 rue de Berlin",
+        "city": "Sète",
+        "zip": "34200",
+        "born": "02/04/1948",
+        "laboratoryId": 6
+    },
+    "jp": {
+        "id": "jp",
+        "gender": "Male",
+        "firstname": "Jean-Patrick",
+        "lastname": "Poizat",
+        "street": "136 impasse des capucines",
+        "city": "Prevessin-Moëns",
+        "zip": "01280",
+        "born": "10/06/1990",
+        "laboratoryId": 0
+    },
+    "lucie": {
+        "id": "lucie",
+        "gender": "Female",
+        "firstname": "Lucie",
+        "lastname": "Fradin",
+        "street": "63 Boulevard de Charonne",
+        "city": "Paris",
+        "zip": "75011",
+        "born": "24/06/1992",
+        "laboratoryId": 5
+    }
+}

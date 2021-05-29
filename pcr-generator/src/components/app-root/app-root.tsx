@@ -1,6 +1,7 @@
 import { Component, getAssetPath, h, Host, State } from '@stencil/core';
 import html2pdf from 'html2pdf.js'
 import laboratories from './../../config/laboratory.json';
+import persons from './../../config/persons.json';
 import doctors from './../../config/doctors.json';
 import { Utils } from './../../utils/utils';
 
@@ -34,6 +35,17 @@ export class AppRoot {
       this.initDate();
     } else {
       this.getCurrentDate();
+    }
+
+    if (window.location?.search?.split('?person=')[1]) {
+      const person = window.location?.search?.split('?person=')[1];
+      console.log('person', person)
+      if (persons[person]) {
+        setTimeout(() => {        
+          this.user = persons[person];
+          this.selectedLaboartory = laboratories.find(labo => labo.id === persons[person].laboratoryId)
+        });
+      }
     }
   }
 
