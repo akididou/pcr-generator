@@ -118,5 +118,20 @@
         },
         "phone": "04 67 61 20 94",
         "email": "contact@labosud.fr"
+    },
+    {
+        "id": 8,
+        "name": "Laboratoire Bioaxiome",
+        "address": {
+            "street": "69 Avenue Jean Jaurès",
+            "city": "Nîmes",
+            "zip": "30900",
+            "department": {
+                "name": "Gard",
+                "code": "30"
+            }
+        },
+        "phone": "04 66 29 95 95",
+        "email": "contact@labobioaxiome.fr"
     }
 ]
