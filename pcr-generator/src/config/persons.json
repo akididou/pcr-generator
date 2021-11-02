@@ -75,5 +75,16 @@
         "zip": "75011",
         "born": "24/06/1992",
         "laboratoryId": 5
+    },
+    "clemence": {
+        "id": "clemence",
+        "gender": "Female",
+        "firstname": "Clémence",
+        "lastname": "Vialatte",
+        "street": "1282 Chemin de Moulares",
+        "city": "Montpellier",
+        "zip": "34070",
+        "born": "16/03/1991",
+        "laboratoryId": 7
     }
 }
